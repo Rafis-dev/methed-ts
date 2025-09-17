@@ -1,10 +1,18 @@
-type User = {
+interface User {
   name: string;
   age: number;
   group: string;
-};
+}
 
-const persons: User[] = [
+interface Admin {
+  name: string;
+  age: number;
+  role: string;
+}
+
+type Person = User | Admin;
+
+const persons: Person[] = [
   {
     name: 'Иван Петров',
     age: 27,
@@ -30,10 +38,21 @@ const persons: User[] = [
     age: 29,
     group: 'Коллеги',
   },
+  {
+    name: 'Олег Попов',
+    age: 32,
+    role: 'администратор',
+  },
 ];
 
-const logPerson = (user: User): void => {
-  console.log(`${user.name}, ${user.age}`);
+const logPerson = (person: Person): void => {
+  let information: string;
+  if ('role' in person) {
+    information = person.role;
+  } else {
+    information = person.group;
+  }
+  console.log(`${person.name}, ${person.age}, ${information}`);
 };
 
 console.log('Users:');
